@@ -28,6 +28,7 @@ export default function TabsLayout() {
         name="newPost"
         options={{
           title: "New Post",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="post" size={24} color={color} />
           ),

@@ -18,7 +18,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={MyTheme}>
       {/* makes time/battery visible on dark bg */}
-      <StatusBar style="light" backgroundColor="#000000" />
+      <StatusBar style="light" backgroundColor="#fff" />
       <Stack screenOptions={{ headerShown: false }} />
     </ThemeProvider>
   );
