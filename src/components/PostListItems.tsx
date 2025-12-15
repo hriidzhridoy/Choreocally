@@ -1,3 +1,4 @@
+import { Post } from "@/types/types";
 import { Ionicons } from "@expo/vector-icons";
 import { useEvent } from "expo";
 import { useVideoPlayer, VideoView } from "expo-video";
@@ -9,11 +10,19 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
 const videoSource =
   "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
-export default function PostListItems() {
+
+type PostListProps = {
+  postItems: Post;
+};
+export default function PostListItems({ postItems }: PostListProps) {
   const { height } = Dimensions.get("window");
-  const player = useVideoPlayer(videoSource, (player) => {
+
+  const { nrOfLikes, nrOfComments, nrOfShares, user, video_url, description } =
+    postItems;
+  const player = useVideoPlayer(video_url, (player) => {
     player.loop = true;
     player.play();
   });
@@ -35,17 +44,17 @@ export default function PostListItems() {
       <View style={styles.controlsContainer}>
         <TouchableOpacity onPress={() => console.log("Like Pressed")}>
           <Ionicons name="heart" size={33} color="#fff" />
-          <Text style={styles.label}>12K</Text>
+          <Text style={styles.label}>{nrOfLikes[0].count || 0}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => console.log("Comment Pressed")}>
           <Ionicons name="chatbubble" size={30} color="#fff" />
-          <Text style={styles.label}>345</Text>
+          <Text style={styles.label}>{nrOfComments[0].count || 0}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => console.log("Share Pressed")}>
           <Ionicons name="arrow-redo" size={33} color="#fff" />
-          <Text style={styles.label}>Share</Text>
+          <Text style={styles.label}>{nrOfShares[0].count || 0}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => console.log("Profile Pressed")}>
@@ -53,8 +62,8 @@ export default function PostListItems() {
         </TouchableOpacity>
       </View>
       <View style={styles.videoInfo}>
-        <Text style={styles.userName}>Name</Text>
-        <Text style={styles.description}>Description</Text>
+        <Text style={styles.userName}>{user.username}</Text>
+        <Text style={styles.description}>{description}</Text>
       </View>
     </View>
   );
